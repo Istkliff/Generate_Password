@@ -38,5 +38,16 @@ namespace GenPassword
 
 			FinalPass.Text = result; //Broadcast to textbox
 		}
+
+		private void CopyPass(object sender, RoutedEventArgs e)
+		{
+			if(String.IsNullOrEmpty(FinalPass.Text) == false) //Check if string is empty
+			{
+				Clipboard.SetText(FinalPass.Text);	//Copy to clipboard...
+			} else
+			{
+				FinalPass.Text = "String is empty"; //...or display warning
+			}
+		}
 	}
 }

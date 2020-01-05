@@ -30,6 +30,7 @@
         </Grid.RowDefinitions>
 
         <Grid>
+            
             <TextBox 
                 Height="25"
                 Width="200"
@@ -50,6 +51,41 @@
         </Grid>
 
         <Grid Grid.Row="1">
+            <StackPanel HorizontalAlignment="Left" VerticalAlignment="Center" Margin="25,-40,0,0">
+                <CheckBox
+                    Content="Numbers"
+                    Name="CBNumbers"
+                    Margin="10"
+                    IsChecked="True"
+                    />
+                <CheckBox
+                    Content="Letters"
+                    Name="CBLetters"
+                    Margin="10"
+                    IsChecked="True"
+                    />
+                <CheckBox
+                    Content="Symbols"
+                    Name="CBSymbols"
+                    Margin="10"
+                    IsChecked="True"
+                    />
+            </StackPanel>
+
+            <StackPanel HorizontalAlignment="Right" VerticalAlignment="Center" Margin="0,-110,50,0">
+                <TextBlock
+                    Text="Size:"
+                    />
+                <TextBox
+                    Text=""
+                    Width="40"
+                    Height="20"
+                    MaxLength="2"
+                    Margin="30,-17,0,0"
+                    Name="TBSize"
+                    />
+            </StackPanel>
+            
             <Button
                 Height="30"
                 Width="150"

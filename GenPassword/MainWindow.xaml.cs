@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -12,7 +13,6 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
-
 namespace GenPassword
 {
 	/// <summary>
@@ -21,7 +21,11 @@ namespace GenPassword
 	public partial class MainWindow : Window
 	{
 		Random rnd = new Random(); //Random method
-		string chars = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz/*-+.=#@!%$^&()?|\"'/"; //Main symbols for random generation
+		string letters = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz"; //letters for selection
+		string numbers = "0123456789"; //numbers for selection
+		string symbols = "/*-+.=#@!%$^&()?|\"'/"; //symbols for selection
+		string randomString = ""; //final string with all chars for generation
+
 		public MainWindow()
 		{
 			InitializeComponent();
@@ -31,9 +35,13 @@ namespace GenPassword
 		{
 			string result = ""; //Reset the password string
 
-			for (int i = rnd.Next(5,50); i > 0; i--)
+			compareString();
+
+			int size = getSize(); //getting size
+
+			for (int i = size; i > 0; i--)
 			{
-				result += chars[rnd.Next(chars.Length)]; //Generation password with random size
+				result += randomString[rnd.Next(randomString.Length)]; //Generation password with random size
 			}
 
 			FinalPass.Text = result; //Broadcast to textbox
@@ -47,6 +55,45 @@ namespace GenPassword
 			} else
 			{
 				FinalPass.Text = "String is empty"; //...or display warning
+			}
+		}
+
+		private void compareString() //making string for randomization password
+		{
+			randomString = "";
+
+			if (CBLetters.IsChecked == true) 
+			{
+				randomString += letters; //add letters to password
+			}
+
+			if (CBNumbers.IsChecked == true)
+			{
+				randomString += numbers; //add numbers to password
+			}
+
+			if (CBSymbols.IsChecked == true)
+			{
+				randomString += symbols; //add symbols to password
+			}
+		}
+
+		private void TBSize_previewtextinput(object sender, TextCompositionEventArgs e) //check on numbers in input
+		{
+			e.Handled = new Regex("[^0-9]+").IsMatch(e.Text);
+		}
+
+		private int getSize()
+		{
+			int size = Convert.ToInt32(TBSize.Text); //convert to int
+
+			if(size > 0) //check on pozistive num
+			{
+				return size;
+			} else
+			{
+				TBSize.Text = "1"; //set default num if num is negative
+				return 1;
 			}
 		}
 	}
